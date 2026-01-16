@@ -8,6 +8,9 @@ import '../css/styles.css';
 import { formatShortcutDisplay, formatStars } from './utils/helpers.js';
 import { APP_VERSION, injectVersion } from '../version.js';
 import { initI18n, applyTranslations, rewriteLinks, injectLanguageSwitcher, createLanguageSwitcher, t } from './i18n/index.js';
+import { Buffer } from 'buffer';
+
+window.Buffer= Buffer
 
 const init = async () => {
   await initI18n();
