@@ -1,6 +1,6 @@
 import { createIcons, icons } from 'lucide';
 
-const API_URL = 'http://localhost:3001';
+const API_URL = 'http://localhost:5000';
 
 function showAlert(title: string, message: string) {
   alert(`${title}\n\n${message}`);
