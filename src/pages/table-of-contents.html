@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Generate Table of Contents -   </title>
+  <link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <link rel="apple-touch-icon" href="/images/favicon.png" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="alternate" hreflang="en" href="/en/table-of-contents.html" />
+  <link rel="alternate" hreflang="de" href="/de/table-of-contents.html" />
+  <link rel="alternate" hreflang="vi" href="/vi/table-of-contents.html" />
+  <link rel="alternate" hreflang="x-default" href="/en/table-of-contents.html" />
+  <link href="/src/css/styles.css" rel="stylesheet" />
+</head>
+
+<body class="antialiased  ">
+  <nav class="bg-gray-800 border-b border-gray-700 sticky top-0 z-30">
+    <div class="container mx-auto px-4">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex-shrink-0 flex items-center cursor-pointer" id="home-logo">
+          <img src="/images/favicon.svg" alt="Bento PDF Logo" class="h-8 w-8" />
+          <span class="text-white font-bold text-xl ml-2">
+            <a href="/">  </a>
+          </span>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex items-center space-x-8 text-white">
+          <a href="/" class="nav-link" data-i18n="nav.home">Home</a>
+          <a href="/about.html" class="nav-link" data-i18n="nav.about">About</a>
+          <a href="/contact.html" class="nav-link" data-i18n="nav.contact">Contact</a>
+          <a href="/" class="nav-link" data-i18n="nav.allTools">All Tools</a>
+        </div>
+
+        <!-- Mobile Hamburger Button -->
+        <div class="md:hidden flex items-center">
+          <button id="mobile-menu-button" type="button"
+            class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 transition-colors"
+            aria-controls="mobile-menu" aria-expanded="false">
+            <span class="sr-only">Open main menu</span>
+            <!-- Hamburger Icon -->
+            <svg id="menu-icon" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            <!-- Close Icon -->
+            <svg id="close-icon" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+              viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Menu Dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden bg-gray-800 border-t border-gray-700">
+      <div class="px-2 pt-2 pb-3 space-y-1 text-center">
+        <a href="/" class="mobile-nav-link" data-i18n="nav.home">Home</a>
+        <a href="/about.html" class="mobile-nav-link" data-i18n="nav.about">About</a>
+        <a href="/contact.html" class="mobile-nav-link" data-i18n="nav.contact">Contact</a>
+        <a href="/" class="mobile-nav-link" data-i18n="nav.allTools">All Tools</a>
+      </div>
+    </div>
+  </nav>
+
+  <div id="uploader" class="min-h-screen flex items-center justify-center p-4  ">
+    <div id="tool-uploader"
+      class="bg-gray-800 rounded-xl shadow-xl p-8 max-w-2xl w-full text-gray-200 border border-gray-700">
+      <button id="back-to-tools"
+        class="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 mb-6 font-semibold">
+        <i data-lucide="arrow-left" class="cursor-pointer"></i>
+        <span class="cursor-pointer" data-i18n="tools.backToTools"> Back to Tools </span>
+      </button>
+      <h1 class="text-2xl font-bold text-white mb-2" data-i18n="tools:tableOfContents.name">
+        Generate Table of Contents
+      </h1>
+      <p class="text-gray-400 mb-6" data-i18n="tools:tableOfContents.subtitle">
+        Upload a PDF with bookmarks to generate a table of contents page
+      </p>
+
+      <!-- Drop Zone for Main PDF Upload -->
+      <div id="drop-zone"
+        class="relative flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-gray-600 rounded-xl cursor-pointer bg-gray-700 hover:bg-gray-600 transition-colors duration-300">
+        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+          <i data-lucide="upload-cloud" class="w-10 h-10 mb-3 text-gray-400"></i>
+          <p class="mb-2 text-sm text-gray-300">
+            <span class="font-semibold" data-i18n="upload.clickToSelect">Click to select a file</span> <span
+              data-i18n="upload.orDragAndDrop">or drag and drop</span>
+          </p>
+          <p class="text-xs text-gray-500">A single PDF file</p>
+          <p class="text-xs text-gray-500">
+            Your files never leave your device.
+          </p>
+        </div>
+        <input type="file" id="file-input" accept=".pdf"
+          class="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer" />
+      </div>
+
+      <!-- File Display Area -->
+      <div id="file-display-area" class="mt-4 hidden"></div>
+
+      <!-- Options Section -->
+      <div class="mt-6 space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-300 mb-2">
+            TOC Title
+          </label>
+          <input type="text" id="toc-title" value="Table of Contents"
+            class="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Table of Contents" />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-300 mb-2">
+            Font Size
+          </label>
+          <select id="font-size"
+            class="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="10">10pt</option>
+            <option value="11">11pt</option>
+            <option value="12" selected>12pt</option>
+            <option value="14">14pt</option>
+            <option value="16">16pt</option>
+            <option value="18">18pt</option>
+            <option value="20">20pt</option>
+            <option value="22">22pt</option>
+            <option value="24">24pt</option>
+            <option value="26">26pt</option>
+            <option value="30">30pt</option>
+            <option value="36">36pt</option>
+            <option value="42">42pt</option>
+            <option value="48">48pt</option>
+            <option value="60">60pt</option>
+            <option value="72">72pt</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-300 mb-2">
+            Font Family
+          </label>
+          <select id="font-family"
+            class="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="0">Times Roman</option>
+            <option value="1">Times Bold</option>
+            <option value="2">Times Italic</option>
+            <option value="3">Times Bold Italic</option>
+            <option value="4" selected>Helvetica</option>
+            <option value="5">Helvetica Bold</option>
+            <option value="6">Helvetica Oblique</option>
+            <option value="7">Helvetica Bold Oblique</option>
+            <option value="8">Courier</option>
+            <option value="9">Courier Bold</option>
+            <option value="10">Courier Oblique</option>
+            <option value="11">Courier Bold Oblique</option>
+          </select>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <input type="checkbox" id="add-bookmark" checked class="w-4 h-4 accent-blue-500" />
+          <label for="add-bookmark" class="text-sm text-gray-300">
+            Add bookmark for TOC page
+          </label>
+        </div>
+      </div>
+
+      <!-- Generate Button -->
+      <button id="generate-btn" disabled class="btn-gradient w-full mt-6">
+        <span id="generate-btn-text">Generate Table of Contents</span>
+      </button>
+
+      <!-- Status Message -->
+      <div id="status-message" class="mt-4 hidden p-3 rounded-lg text-sm"></div>
+    </div>
+  </div>
+
+   
+  <script type="module" src="/src/js/utils/lucide-init.ts"></script>
+  <script type="module" src="/src/js/utils/full-width.ts"></script>
+  <script type="module" src="/src/js/utils/simple-mode-footer.ts"></script>
+  <script type="module" src="/src/js/logic/table-of-contents.ts"></script>
+  <script type="module" src="/src/js/mobileMenu.ts"></script>
+  <script type="module" src="/src/js/main.ts"></script>
+</body>
+
+</html>

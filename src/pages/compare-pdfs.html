@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Compare PDFs -   </title>
+    <meta name="description"
+        content="Compare two PDF files side by side or with overlay. See differences between PDF versions. Free, secure, and runs entirely in your browser.">
+    <link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
+    <link rel="icon" type="image/png" href="/images/favicon.png" />
+    <link rel="apple-touch-icon" href="/images/favicon.png" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="alternate" hreflang="en" href="/en/compare-pdfs.html" />
+    <link rel="alternate" hreflang="de" href="/de/compare-pdfs.html" />
+    <link rel="alternate" hreflang="vi" href="/vi/compare-pdfs.html" />
+    <link rel="alternate" hreflang="x-default" href="/en/compare-pdfs.html" />
+    <link href="/src/css/styles.css" rel="stylesheet" />
+    <style>
+        .compare-viewer-wrapper.overlay-mode {
+            position: relative;
+        }
+
+        .compare-viewer-wrapper.overlay-mode #panel-1,
+        .compare-viewer-wrapper.overlay-mode #panel-2 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .compare-viewer-wrapper.overlay-mode #panel-2 {
+            pointer-events: none;
+        }
+
+        .compare-viewer-wrapper.side-by-side-mode {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .compare-viewer-wrapper.side-by-side-mode #panel-1,
+        .compare-viewer-wrapper.side-by-side-mode #panel-2 {
+            flex: 1;
+            overflow: auto;
+            max-height: 70vh;
+        }
+    </style>
+</head>
+
+<body class="antialiased  ">
+    <nav class="bg-gray-800 border-b border-gray-700 sticky top-0 z-30">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0 flex items-center cursor-pointer" id="home-logo">
+                    <img src="/images/favicon.svg" alt="Bento PDF Logo" class="h-8 w-8" />
+                    <span class="text-white font-bold text-xl ml-2">
+                        <a href="/">  </a>
+                    </span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8 text-white">
+                    <a href="/" class="nav-link" data-i18n="nav.home">Home</a>
+                    <a href="/about.html" class="nav-link" data-i18n="nav.about">About</a>
+                    <a href="/contact.html" class="nav-link" data-i18n="nav.contact">Contact</a>
+                    <a href="/" class="nav-link" data-i18n="nav.allTools">All Tools</a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" type="button"
+                        class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 transition-colors"
+                        aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg id="menu-icon" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg id="close-icon" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-800 border-t border-gray-700">
+            <div class="px-2 pt-2 pb-3 space-y-1 text-center">
+                <a href="/" class="mobile-nav-link" data-i18n="nav.home">Home</a>
+                <a href="/about.html" class="mobile-nav-link" data-i18n="nav.about">About</a>
+                <a href="/contact.html" class="mobile-nav-link" data-i18n="nav.contact">Contact</a>
+                <a href="/" class="mobile-nav-link" data-i18n="nav.allTools">All Tools</a>
+            </div>
+        </div>
+    </nav>
+
+    <div id="uploader" class="min-h-screen flex flex-col items-center justify-start py-12 p-4  ">
+        <div id="tool-uploader"
+            class="bg-gray-800 rounded-xl shadow-xl px-4 py-8 md:p-8 max-w-5xl w-full text-gray-200 border border-gray-700">
+            <button id="back-to-tools"
+                class="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 mb-6 font-semibold">
+                <i data-lucide="arrow-left" class="cursor-pointer"></i>
+                <span class="cursor-pointer" data-i18n="tools.backToTools"> Back to Tools </span>
+            </button>
+
+            <h1 class="text-2xl font-bold text-white mb-2" data-i18n="tools:comparePdfs.name">Compare PDFs</h1>
+            <p class="text-gray-400 mb-6" data-i18n="tools:comparePdfs.subtitle">
+                Upload two PDF files to compare them side by side or with overlay mode.
+            </p>
+
+            <!-- File Upload Areas -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div id="drop-zone-1"
+                    class="relative flex flex-col items-center justify-center w-full h-48 md:h-64 border-2 border-dashed border-gray-600 rounded-xl cursor-pointer   hover:bg-gray-700 transition-colors duration-300">
+                    <div id="file-display-1" class="flex flex-col items-center justify-center">
+                        <i data-lucide="file-text" class="w-8 h-8 mb-2 text-gray-400"></i>
+                        <p class="text-sm text-gray-400">First PDF</p>
+                        <p class="text-xs text-gray-500">Click or drop</p>
+                    </div>
+                    <input id="file-input-1" type="file"
+                        class="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer" accept="application/pdf">
+                </div>
+                <div id="drop-zone-2"
+                    class="relative flex flex-col items-center justify-center w-full h-48 md:h-64 border-2 border-dashed border-gray-600 rounded-xl cursor-pointer   hover:bg-gray-700 transition-colors duration-300">
+                    <div id="file-display-2" class="flex flex-col items-center justify-center">
+                        <i data-lucide="file-text" class="w-8 h-8 mb-2 text-gray-400"></i>
+                        <p class="text-sm text-gray-400">Second PDF</p>
+                        <p class="text-xs text-gray-500">Click or drop</p>
+                    </div>
+                    <input id="file-input-2" type="file"
+                        class="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer" accept="application/pdf">
+                </div>
+            </div>
+
+            <!-- Compare Viewer (hidden until both files loaded) -->
+            <div id="compare-viewer" class="hidden">
+                <!-- Unified Toolbar -->
+                <div
+                    class="flex flex-wrap items-center justify-center gap-4 mb-4 p-3   rounded-lg border border-gray-700">
+                    <!-- Page Navigation -->
+                    <button id="prev-page-compare"
+                        class="btn p-2 rounded-full bg-gray-700 hover:bg-gray-600 disabled:opacity-50" disabled>
+                        <i data-lucide="chevron-left"></i>
+                    </button>
+                    <span class="text-white font-medium">
+                        Page <span id="current-page-display-compare">1</span> of <span
+                            id="total-pages-display-compare">1</span>
+                    </span>
+                    <button id="next-page-compare"
+                        class="btn p-2 rounded-full bg-gray-700 hover:bg-gray-600 disabled:opacity-50" disabled>
+                        <i data-lucide="chevron-right"></i>
+                    </button>
+
+                    <!-- Divider -->
+                    <div class="border-l border-gray-600 h-6 mx-2 hidden sm:block"></div>
+
+                    <!-- View Mode Buttons -->
+                    <div class="bg-gray-700 p-1 rounded-md flex gap-1">
+                        <button id="view-mode-overlay"
+                            class="btn bg-indigo-600 px-3 py-1 rounded text-sm font-semibold">Overlay</button>
+                        <button id="view-mode-side"
+                            class="btn px-3 py-1 rounded text-sm font-semibold">Side-by-Side</button>
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="border-l border-gray-600 h-6 mx-2 hidden sm:block"></div>
+
+                    <!-- Overlay Controls -->
+                    <div id="overlay-controls" class="flex items-center gap-2">
+                        <button id="flicker-btn"
+                            class="btn bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded-md text-sm font-semibold">Flicker</button>
+                        <label for="opacity-slider" class="text-sm font-medium text-gray-300">Opacity:</label>
+                        <input type="range" id="opacity-slider" min="0" max="1" step="0.05" value="0.5"
+                            class="w-24 accent-indigo-500">
+                    </div>
+
+                    <!-- Side-by-side Controls (hidden initially) -->
+                    <div id="side-by-side-controls" class="hidden flex items-center gap-2">
+                        <label class="flex items-center gap-2 text-sm font-medium text-gray-300 cursor-pointer">
+                            <input type="checkbox" id="sync-scroll-toggle" checked
+                                class="w-4 h-4 rounded text-indigo-600 bg-gray-700 border-gray-600 focus:ring-indigo-500">
+                            Sync Scrolling
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Viewer Wrapper -->
+                <div id="compare-viewer-wrapper"
+                    class="compare-viewer-wrapper overlay-mode   rounded-lg border border-gray-700 min-h-[400px] relative">
+                    <div id="panel-1" class="overflow-auto">
+                        <canvas id="canvas-compare-1" class="block mx-auto"></canvas>
+                    </div>
+                    <div id="panel-2" class="overflow-auto">
+                        <canvas id="canvas-compare-2" class="block mx-auto" style="opacity: 0.5;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loader Modal -->
+    <div id="loader-modal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
+        <div class="bg-gray-800 p-8 rounded-lg flex flex-col items-center gap-4 border border-gray-700 shadow-xl">
+            <div class="solid-spinner"></div>
+            <p id="loader-text" class="text-white text-lg font-medium" data-i18n="loader.processing"
+                data-i18n="loader.processing">Processing...</p>
+        </div>
+    </div>
+
+    <!-- Alert Modal -->
+    <div id="alert-modal" class="fixed inset-0   bg-opacity-90 flex items-center justify-center z-50 hidden">
+        <div class="bg-gray-800 rounded-lg shadow-xl p-6 max-w-sm w-full border border-gray-700">
+            <h3 id="alert-title" class="text-xl font-bold text-white mb-2" data-i18n="alert.title"
+                data-i18n="alert.title">Alert</h3>
+            <p id="alert-message" class="text-gray-300 mb-6"></p>
+            <button id="alert-ok"
+                class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200">
+                OK
+            </button>
+        </div>
+    </div>
+
+     
+    <script type="module" src="/src/js/utils/lucide-init.ts"></script>
+    <script type="module" src="/src/js/utils/full-width.ts"></script>
+    <script type="module" src="/src/js/utils/simple-mode-footer.ts"></script>
+    <script type="module" src="/src/version.ts"></script>
+    <script type="module" src="/src/js/logic/compare-pdfs-page.ts"></script>
+    <script type="module" src="/src/js/mobileMenu.ts"></script>
+
+    <script type="module" src="/src/js/main.ts"></script>
+</body>
+
+</html>

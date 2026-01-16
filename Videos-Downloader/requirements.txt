@@ -1,0 +1,8 @@
+Flask==3.0.0
+Flask-Session==0.5.0
+yt-dlp==2023.12.30
+instaloader==4.10.3
+APScheduler==3.10.4
+requests==2.31.0
+redis==5.0.1
+python-dotenv==1.0.0
