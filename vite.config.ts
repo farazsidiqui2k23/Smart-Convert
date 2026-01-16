@@ -84,16 +84,18 @@ export default defineConfig(({ mode }) => ({
     }),
   ],
   define: {
+        global: 'globalThis',
     __SIMPLE_MODE__: JSON.stringify(process.env.SIMPLE_MODE === 'true'),
   },
   resolve: {
     alias: {
+      buffer : 'buffer',
       stream: 'stream-browserify',
       zlib: 'browserify-zlib',
     },
   },
   optimizeDeps: {
-    include: ['pdfkit', 'blob-stream'],
+    include: ['pdfkit', 'blob-stream',  'buffer'],
     exclude: ['coherentpdf'],
   },
   server: {
