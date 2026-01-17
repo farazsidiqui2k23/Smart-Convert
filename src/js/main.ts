@@ -8,9 +8,12 @@ import '../css/styles.css';
 import { formatShortcutDisplay, formatStars } from './utils/helpers.js';
 import { APP_VERSION, injectVersion } from '../version.js';
 import { initI18n, applyTranslations, rewriteLinks, injectLanguageSwitcher, createLanguageSwitcher, t } from './i18n/index.js';
-import { Buffer } from 'buffer';
+import process from 'process'
+import { Buffer } from 'buffer'
 
-window.Buffer= Buffer
+window.process = process
+window.Buffer = Buffer
+
 
 const init = async () => {
   await initI18n();
@@ -103,7 +106,7 @@ const init = async () => {
                   <span class="text-white font-bold text-lg">BentoPDF</span>
                 </div>
                 <p class="text-gray-400 text-sm">
-                  &copy; 2025 BentoPDF. All rights reserved.
+                  &copy; 2026 Smart Convert. All rights reserved.
                 </p>
                 <p class="text-gray-500 text-xs mt-2">
                   Version <span id="app-version-simple">${APP_VERSION}</span>

@@ -1,4 +1,4 @@
-// This file centralizes the definition of all available tools, organized by category. 
+// This file centralizes the definition of all available tools, organized by category.
 export const categories = [
   {
     name: 'Popular Tools',
@@ -10,10 +10,10 @@ export const categories = [
         subtitle: 'Merge, Split, Organize, Delete, Rotate, Add Blank Pages, Extract and Duplicate in an unified interface.',
       },
       {
-        href: import.meta. env.BASE_URL + 'merge-pdf.html',
+        href: import.meta.env.BASE_URL + 'merge-pdf.html',
         name: 'Merge PDF',
         icon: 'combine',
-        subtitle: 'Combine multiple PDFs into one file.  Preserves Bookmarks.',
+        subtitle: 'Combine multiple PDFs into one file. Preserves Bookmarks.',
       },
       {
         href: import.meta.env.BASE_URL + 'split-pdf.html',
@@ -28,14 +28,14 @@ export const categories = [
         subtitle: 'Reduce the file size of your PDF.',
       },
       {
-        href:  import.meta.env.BASE_URL + 'edit-pdf. html',
+        href:  import.meta.env.BASE_URL + 'edit-pdf.html',
         name: 'PDF Editor',
         icon: 'pocket-knife',
         subtitle: 
           'Annotate, highlight, redact, comment, add shapes/images, search, and view PDFs',
       },
       {
-        href: import.meta.env. BASE_URL + 'jpg-to-pdf.html',
+        href: import.meta.env.BASE_URL + 'jpg-to-pdf.html',
         name: 'JPG to PDF',
         icon: 'image-up',
         subtitle:  'Create a PDF from one or more JPG images.',
@@ -53,7 +53,7 @@ export const categories = [
         subtitle: 'Trim the margins of every page in your PDF.',
       },
       {
-        href: import.meta.env. BASE_URL + 'extract-pages.html',
+        href: import.meta.env.BASE_URL + 'extract-pages.html',
         name: 'Extract Pages',
         icon: 'ungroup',
         subtitle: 'Save a selection of pages as new files.',
@@ -65,7 +65,7 @@ export const categories = [
         subtitle:  'Duplicate, reorder, and delete pages.',
       },
       {
-        href: import. meta.env.BASE_URL + 'delete-pages.html',
+        href: import.meta.env.BASE_URL + 'delete-pages.html',
         name: 'Delete Pages',
         icon: 'trash-2',
         subtitle: 'Remove specific pages from your document.',
@@ -76,14 +76,14 @@ export const categories = [
     name: 'Edit & Annotate',
     tools: [
       {
-        href: import. meta.env.BASE_URL + 'edit-pdf.html',
+        href: import.meta.env.BASE_URL + 'edit-pdf.html',
         name: 'PDF Editor',
         icon:  'pocket-knife',
         subtitle:
           'Annotate, highlight, redact, comment, add shapes/images, search, and view PDFs.',
       },
       {
-        href: import.meta.env. BASE_URL + 'bookmark. html',
+        href: import.meta.env.BASE_URL + 'bookmark.html',
         name: 'Edit Bookmarks',
         icon:  'bookmark',
         subtitle:  'Add, edit, import, delete and extract PDF bookmarks.',
@@ -95,7 +95,7 @@ export const categories = [
         subtitle: 'Generate a table of contents page from PDF bookmarks.',
       },
       {
-        href: import.meta. env.BASE_URL + 'page-numbers.html',
+        href: import.meta.env.BASE_URL + 'page-numbers.html',
         name: 'Page Numbers',
         icon:  'list-ordered',
         subtitle: 'Insert page numbers into your document.',
@@ -119,31 +119,31 @@ export const categories = [
         subtitle: 'Create a "dark mode" version of your PDF.',
       },
       {
-        href: import.meta. env.BASE_URL + 'background-color.html',
+        href: import.meta.env.BASE_URL + 'background-color.html',
         name: 'Background Color',
         icon: 'palette',
         subtitle: 'Change the background color of your PDF.',
       },
       {
-        href: import. meta.env.BASE_URL + 'text-color.html',
+        href: import.meta.env.BASE_URL + 'text-color.html',
         name: 'Change Text Color',
         icon: 'type',
         subtitle: 'Change the color of text in your PDF.',
       },
       {
-        href: import.meta. env.BASE_URL + 'sign-pdf.html',
+        href: import.meta.env.BASE_URL + 'sign-pdf.html',
         name: 'Sign PDF',
         icon: 'pen-tool',
         subtitle: 'Draw, type, or upload your signature.',
       },
       {
-        href: import.meta.env. BASE_URL + 'add-stamps.html',
+        href: import.meta.env.BASE_URL + 'add-stamps.html',
         name: 'Add Stamps',
         icon: 'stamp',
         subtitle: 'Add image stamps to your PDF using the annotation toolbar.',
       },
       {
-        href: import. meta.env.BASE_URL + 'remove-annotations.html',
+        href: import.meta.env.BASE_URL + 'remove-annotations.html',
         name: 'Remove Annotations',
         icon: 'eraser',
         subtitle: 'Strip comments, highlights, and links.',
@@ -155,19 +155,19 @@ export const categories = [
         subtitle: 'Trim the margins of every page in your PDF.',
       },
       {
-        href: import.meta.env. BASE_URL + 'form-filler.html',
+        href: import.meta.env.BASE_URL + 'form-filler.html',
         name: 'PDF Form Filler',
         icon: 'square-pen',
-        subtitle: 'Fill in forms directly in the browser.  Also supports XFA forms.',
+        subtitle: 'Fill in forms directly in the browser.Also supports XFA forms.',
       },
       {
-        href:  import.meta.env.BASE_URL + 'form-creator. html',
+        href:  import.meta.env.BASE_URL + 'form-creator.html',
         name: 'Create PDF Form',
         icon:  'file-input',
         subtitle: 'Create fillable PDF forms with drag-and-drop text fields.',
       },
       {
-        href: import.meta. env.BASE_URL + 'remove-blank-pages.html',
+        href: import.meta.env.BASE_URL + 'remove-blank-pages.html',
         name: 'Remove Blank Pages',
         icon: 'file-minus-2',
         subtitle: 'Automatically detect and delete blank pages.',
@@ -190,25 +190,25 @@ export const categories = [
         subtitle: 'Convert Excel spreadsheets (.xlsx, .xls) to PDF format.',
       },
       {
-        href: import.meta. env.BASE_URL + 'text-to-pdf.html',
+        href: import.meta.env.BASE_URL + 'text-to-pdf.html',
         name: 'Text to PDF',
         icon: 'file-text',
         subtitle: 'Convert plain text (.txt) files to PDF format.',
       },
       {
-        href: import. meta.env.BASE_URL + 'html-to-pdf.html',
+        href: import.meta.env.BASE_URL + 'html-to-pdf.html',
         name: 'HTML to PDF',
         icon: 'globe',
         subtitle: 'Convert HTML web pages to PDF documents.',
       },
       {
-        href: import. meta.env.BASE_URL + 'image-to-pdf.html',
+        href: import.meta.env.BASE_URL + 'image-to-pdf.html',
         name: 'Image to PDF',
         icon: 'images',
         subtitle: 'Convert JPG, PNG, WebP, BMP, TIFF, SVG, HEIC to PDF.',
       },
       {
-        href: import.meta. env.BASE_URL + 'jpg-to-pdf.html',
+        href: import.meta.env.BASE_URL + 'jpg-to-pdf.html',
         name: 'JPG to PDF',
         icon: 'image-up',
         subtitle: 'Create a PDF from one or more JPG images.',
@@ -220,7 +220,7 @@ export const categories = [
         subtitle: 'Create a PDF from one or more PNG images.',
       },
       {
-        href: import.meta.env. BASE_URL + 'webp-to-pdf.html',
+        href: import.meta.env.BASE_URL + 'webp-to-pdf.html',
         name: 'WebP to PDF',
         icon: 'image-up',
         subtitle:  'Create a PDF from one or more WebP images.',
@@ -256,7 +256,7 @@ export const categories = [
         subtitle: 'Convert a plain text file into a PDF.',
       },
       {
-        href: import.meta.env. BASE_URL + 'json-to-pdf.html',
+        href: import.meta.env.BASE_URL + 'json-to-pdf.html',
         name: 'JSON to PDF',
         icon: 'file-code',
         subtitle: 'Convert JSON files to PDF format.',
@@ -268,13 +268,13 @@ export const categories = [
     name: 'Convert from PDF',
     tools: [
       {
-        href: import.meta. env.BASE_URL + 'pdf-to-word.html',
+        href: import.meta.env.BASE_URL + 'pdf-to-word.html',
         name: 'PDF to Word',
         icon: 'file-text',
         subtitle: 'Convert PDF files to editable Word documents (.docx).',
       },
       {
-        href: import. meta.env.BASE_URL + 'pdf-to-excel.html',
+        href: import.meta.env.BASE_URL + 'pdf-to-excel.html',
         name: 'PDF to Excel',
         icon:  'table',
         subtitle: 'Convert PDF files to Excel spreadsheets (.xlsx).',
@@ -292,7 +292,7 @@ export const categories = [
         subtitle: 'Convert PDF files to HTML web page format.',
       },
       {
-        href: import. meta.env.BASE_URL + 'pdf-to-jpg. html',
+        href: import.meta.env.BASE_URL + 'pdf-to-jpg.html',
         name: 'PDF to JPG',
         icon: 'file-image',
         subtitle: 'Convert each PDF page into a JPG image.',
@@ -304,25 +304,25 @@ export const categories = [
         subtitle: 'Convert each PDF page into a PNG image.',
       },
       {
-        href: import. meta.env.BASE_URL + 'pdf-to-webp.html',
+        href: import.meta.env.BASE_URL + 'pdf-to-webp.html',
         name: 'PDF to WebP',
         icon: 'file-image',
         subtitle: 'Convert each PDF page into a WebP image.',
       },
       {
-        href: import.meta.env. BASE_URL + 'pdf-to-bmp.html',
+        href: import.meta.env.BASE_URL + 'pdf-to-bmp.html',
         name: 'PDF to BMP',
         icon: 'file-image',
         subtitle:  'Convert each PDF page into a BMP image.',
       },
       {
-        href: import. meta.env.BASE_URL + 'pdf-to-tiff.html',
+        href: import.meta.env.BASE_URL + 'pdf-to-tiff.html',
         name: 'PDF to TIFF',
         icon: 'file-image',
         subtitle: 'Convert each PDF page into a TIFF image.',
       },
       {
-        href: import.meta. env.BASE_URL + 'pdf-to-greyscale.html',
+        href: import.meta.env.BASE_URL + 'pdf-to-greyscale.html',
         name: 'PDF to Greyscale',
         icon: 'palette',
         subtitle: 'Convert all colors to black and white.',
@@ -345,7 +345,7 @@ export const categories = [
         subtitle: 'Make a PDF searchable and copyable.',
       },
       {
-        href:  import.meta.env.BASE_URL + 'merge-pdf. html',
+        href:  import.meta.env.BASE_URL + 'merge-pdf.html',
         name: 'Merge PDF',
         icon:  'combine',
         subtitle:  'Combine multiple PDFs into one file.',
@@ -354,10 +354,10 @@ export const categories = [
         href: import.meta.env.BASE_URL + 'alternate-merge.html',
         name: 'Alternate & Mix Pages',
         icon: 'shuffle',
-        subtitle: 'Merge PDFs by alternating pages from each PDF. Preserves Bookmarks',
+        subtitle: 'Merge PDFs by alternating pages from each PDF.Preserves Bookmarks',
       },
       {
-        href: import.meta.env. BASE_URL + 'organize-pdf.html',
+        href: import.meta.env.BASE_URL + 'organize-pdf.html',
         name: 'Organize & Duplicate',
         icon: 'files',
         subtitle: 'Duplicate, reorder, and delete pages.',
@@ -375,7 +375,7 @@ export const categories = [
         subtitle: 'Extract all embedded files from PDF(s) as a ZIP.',
       },
       {
-        href: import.meta.env. BASE_URL + 'edit-attachments.html',
+        href: import.meta.env.BASE_URL + 'edit-attachments.html',
         name: 'Edit Attachments',
         icon: 'file-edit',
         subtitle: 'View or remove attachments in your PDF.',
@@ -393,7 +393,7 @@ export const categories = [
         subtitle: 'Extract a range of pages into a new PDF.',
       },
       {
-        href: import. meta.env.BASE_URL + 'divide-pages.html',
+        href: import.meta.env.BASE_URL + 'divide-pages.html',
         name: 'Divide Pages',
         icon: 'table-columns-split',
         subtitle: 'Divide pages horizontally or vertically.',
@@ -405,19 +405,19 @@ export const categories = [
         subtitle: 'Save a selection of pages as new files.',
       },
       {
-        href: import. meta.env.BASE_URL + 'delete-pages.html',
+        href: import.meta.env.BASE_URL + 'delete-pages.html',
         name: 'Delete Pages',
         icon: 'trash-2',
         subtitle: 'Remove specific pages from your document.',
       },
       {
-        href: import.meta.env. BASE_URL + 'add-blank-page.html',
+        href: import.meta.env.BASE_URL + 'add-blank-page.html',
         name: 'Add Blank Page',
         icon: 'file-plus-2',
         subtitle: 'Insert an empty page anywhere in your PDF.',
       },
       {
-        href: import.meta.env. BASE_URL + 'reverse-pages.html',
+        href: import.meta.env.BASE_URL + 'reverse-pages.html',
         name: 'Reverse Pages',
         icon: 'arrow-down-z-a',
         subtitle: 'Flip the order of all pages in your document.',
@@ -447,7 +447,7 @@ export const categories = [
         subtitle: 'Inspect the hidden properties of your PDF.',
       },
       {
-        href: import.meta.env. BASE_URL + 'edit-metadata.html',
+        href: import.meta.env.BASE_URL + 'edit-metadata.html',
         name: 'Edit Metadata',
         icon: 'file-cog',
         subtitle: 'Change the author, title, and other properties.',
@@ -459,7 +459,7 @@ export const categories = [
         subtitle: 'Package multiple PDF files into a ZIP archive.',
       },
       {
-        href: import.meta. env.BASE_URL + 'compare-pdfs.html',
+        href: import.meta.env.BASE_URL + 'compare-pdfs.html',
         name: 'Compare PDFs',
         icon: 'git-compare',
         subtitle: 'Compare two PDFs side by side.',
@@ -507,7 +507,7 @@ export const categories = [
           'Remove password protection and security restrictions associated with digitally signed PDF files.',
       },
       {
-        href: import.meta. env.BASE_URL + 'repair-pdf.html',
+        href: import.meta.env.BASE_URL + 'repair-pdf.html',
         name: 'Repair PDF',
         icon: 'wrench',
         subtitle: 'Recover data from corrupted or damaged PDF files.',
@@ -524,31 +524,31 @@ export const categories = [
         subtitle: 'Lock your PDF by adding a password.',
       },
       {
-        href: import. meta.env.BASE_URL + 'sanitize-pdf.html',
+        href: import.meta.env.BASE_URL + 'sanitize-pdf.html',
         name: 'Sanitize PDF',
         icon: 'brush-cleaning',
         subtitle: 'Remove metadata, annotations, scripts, and more.',
       },
       {
-        href: import. meta.env.BASE_URL + 'decrypt-pdf.html',
+        href: import.meta.env.BASE_URL + 'decrypt-pdf.html',
         name: 'Decrypt PDF',
         icon: 'unlock',
         subtitle: 'Unlock PDF by removing password protection.',
       },
       {
-        href: import.meta. env.BASE_URL + 'flatten-pdf.html',
+        href: import.meta.env.BASE_URL + 'flatten-pdf.html',
         name: 'Flatten PDF',
         icon: 'layers',
         subtitle: 'Make form fields and annotations non-editable.',
       },
       {
-        href: import. meta.env.BASE_URL + 'remove-metadata.html',
+        href: import.meta.env.BASE_URL + 'remove-metadata.html',
         name: 'Remove Metadata',
         icon: 'file-x',
         subtitle: 'Strip hidden data from your PDF.',
       },
       {
-        href: import.meta. env.BASE_URL + 'change-permissions.html',
+        href: import.meta.env.BASE_URL + 'change-permissions.html',
         name: 'Change Permissions',
         icon: 'shield-check',
         subtitle: 'Set or change user permissions on a PDF.',

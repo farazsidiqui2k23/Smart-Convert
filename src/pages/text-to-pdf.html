@@ -49,9 +49,9 @@
 
     <div id="mobile-menu" class="hidden md:hidden bg-gray-800 border-t border-gray-700">
       <div class="px-2 pt-2 pb-3 space-y-1 text-center">
-        <a href="/" class="mobile-nav-link" data-i18n="nav. home">Home</a>
-        <a href="/about.html" class="mobile-nav-link" data-i18n="nav. about">About</a>
-        <a href="/contact.html" class="mobile-nav-link" data-i18n="nav. contact">Contact</a>
+        <a href="/" class="mobile-nav-link" data-i18n="nav.home">Home</a>
+        <a href="/about.html" class="mobile-nav-link" data-i18n="nav.about">About</a>
+        <a href="/contact.html" class="mobile-nav-link" data-i18n="nav.contact">Contact</a>
         <a href="/" class="mobile-nav-link" data-i18n="nav.allTools">All Tools</a>
       </div>
     </div>
@@ -68,7 +68,7 @@
 
       <h1 class="text-2xl font-bold text-white mb-2">Text to PDF</h1>
       <p class="text-gray-400 mb-6">
-        Upload a plain text file (. txt) and convert it to PDF format
+        Upload a plain text file (.txt) and convert it to PDF format
       </p>
 
       <div id="drop-zone"
@@ -76,11 +76,11 @@
         <div class="flex flex-col items-center justify-center pt-5 pb-6">
           <i data-lucide="upload-cloud" class="w-10 h-10 mb-3 text-gray-400"></i>
           <p class="mb-2 text-sm text-gray-400">
-            <span class="font-semibold" data-i18n="upload. clickToSelect">Click to select a file</span> 
+            <span class="font-semibold" data-i18n="upload.clickToSelect">Click to select a file</span> 
             <span data-i18n="upload.orDragAndDrop">or drag and drop</span>
           </p>
-          <p class="text-xs text-gray-500">Text file (. txt)</p>
-          <p class="text-xs text-gray-500" data-i18n="upload.filesNeverLeave">Your files never leave your device. </p>
+          <p class="text-xs text-gray-500">Text file (.txt)</p>
+          <p class="text-xs text-gray-500" data-i18n="upload.filesNeverLeave">Your files never leave your device.</p>
         </div>
         <input type="file" id="textFile" accept=".txt,text/plain"
           class="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer" />
@@ -102,13 +102,13 @@
     </div>
   </div>
 
-  <script type="module" src="/src/js/utils/lucide-init. ts"></script>
-  <script type="module" src="/src/js/utils/full-width. ts"></script>
+  <script type="module" src="/src/js/utils/lucide-init.ts"></script>
+  <script type="module" src="/src/js/utils/full-width.ts"></script>
   <script type="module" src="/src/js/utils/simple-mode-footer.ts"></script>
   <script type="module" src="/src/version.ts"></script>
   <script type="module" src="/src/js/logic/text-to-pdf.ts"></script>
   <script type="module" src="/src/js/mobileMenu.ts"></script>
-  <script type="module" src="/src/js/main. ts"></script>
+  <script type="module" src="/src/js/main.ts"></script>
 </body>
 
 </html>
