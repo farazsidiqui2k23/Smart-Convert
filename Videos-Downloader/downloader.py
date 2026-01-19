@@ -108,7 +108,7 @@ class UniversalDownloader:
                 print("❓ Unknown platform - attempting generic extraction")
             
             # Try to extract info
-            with yt_dlp. YoutubeDL(ydl_opts) as ydl:
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 info = ydl.extract_info(url, download=False)
                 
                 if not info:
