@@ -1,6 +1,3 @@
-# Netscape HTTP Cookie File
-# http://curl.haxx.se/rfc/cookie_spec.html
-# This is a generated file!  Do not edit.
 
 .youtube.com	TRUE	/	TRUE	1778955406	LOGIN_INFO	AFmmF2swRgIhAMkaPs5MB_JQJnVxAEZHEVR0337CfuxQgaDgomGVOmTEAiEAv7Qzh-i5hj-0pzw9Xn4sJRlZBybay5vu8QTYPUEf-uc:QUQ3MjNmejl1MEVockQ1Vm15TG9BaHY5ZmZZbnZNM2RTdmRTNUQzM0NlTDJOQTlJTzA2RG9LNHVXbFNnQmd6MHBSelh4NjZFNi00UlhxUElQc2ducmsyZkpaYkttNG00bHBrXzBBQzl2TmcwUjFCS3dtMWE1MU5sM0VOX284TlV5LTdpUVZGUjlWbG5KYnEtc2pQUGRWVk1mbDIzdmlKbGdn
 .youtube.com	TRUE	/	FALSE	1803313734	HSID	A4StQoGESuWdC4_9v
