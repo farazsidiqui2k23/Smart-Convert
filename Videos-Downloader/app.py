@@ -20,7 +20,8 @@ downloader = UniversalDownloader()
 scheduler = CleanupScheduler()
 scheduler.start()
 
-# Cleanup orphaned folders on startup
+# Cleanup orphaned folders on startup 
+# Cleanup orphaned folders on startup 
 def cleanup_orphaned_folders():
     """Clean up any leftover folders from previous runs"""
     if os.path.exists(DOWNLOAD_DIR):
