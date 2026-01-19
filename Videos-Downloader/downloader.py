@@ -6,16 +6,6 @@ from datetime import datetime
 class UniversalDownloader:  
     def __init__(self):
         self.progress_data = {}  # Store progress for each session
-        # 🆕 Cookies file path
-        self.cookies_file = 'cookies.txt'
-        
-        # Check if cookies file exists on startup
-        if os.path.exists(self.cookies_file):
-            print(f"✅ Cookies file found:  {self.cookies_file}")
-        else:
-            print(f"⚠️  Warning: Cookies file not found at {self.cookies_file}")
-            print(f"   Some downloads may fail due to authentication")
-            print(f"   To fix: Export cookies from your browser using 'Get cookies.txt' extension")
     
     def detect_platform(self, url):
         """Detect the platform from URL"""
@@ -24,7 +14,7 @@ class UniversalDownloader:
             return 'youtube'
         elif 'instagram.com' in url:   
             return 'instagram'
-        elif 'facebook.com' in url or 'fb.watch' in url: 
+        elif 'facebook.com' in url or 'fb.watch' in url:
             return 'facebook'
         elif 'twitter.com' in url or 'x.com' in url:
             return 'twitter'
@@ -52,25 +42,9 @@ class UniversalDownloader:
             'Upgrade-Insecure-Requests': '1',
             'Sec-Fetch-Dest': 'document',
             'Sec-Fetch-Mode': 'navigate',
-            'Sec-Fetch-Site': 'none',
+            'Sec-Fetch-Site':  'none',
             'Cache-Control': 'max-age=0',
         }
-    
-    def get_base_ydl_opts(self):
-        """🆕 Get base yt-dlp options with cookies support"""
-        opts = {
-            'quiet': False,
-            'no_warnings':  False,
-            'no_check_certificate': True,
-            'http_headers': self.get_common_headers(),
-        }
-        
-        # Add cookies if file exists
-        if os.path. exists(self.cookies_file):
-            opts['cookiefile'] = self.cookies_file
-            print(f"🍪 Using cookies from:  {self.cookies_file}")
-        
-        return opts
     
     def fetch_video_info(self, url):
         """Fetch video metadata WITHOUT downloading"""
@@ -79,16 +53,19 @@ class UniversalDownloader:
             
             print(f"\n{'='*60}")
             print(f"🔍 Fetching video info")
-            print(f"Platform:  {platform}")
+            print(f"Platform: {platform}")
             print(f"URL: {url}")
             print(f"{'='*60}\n")
             
-            # Base options with cookies 🆕
-            ydl_opts = self.get_base_ydl_opts()
-            ydl_opts.update({
+            # Base options
+            ydl_opts = {
+                'quiet': False,
+                'no_warnings': False,
                 'skip_download': True,
                 'extract_flat': False,
-            })
+                'no_check_certificate': True,
+                'http_headers': self.get_common_headers(),
+            }
             
             # Platform-specific configurations
             if platform == 'instagram':
@@ -98,20 +75,21 @@ class UniversalDownloader:
                             'api': ['graphql']
                         }
                     },
+                    'cookiefile': None,  # Add cookie file path if you have one
                 })
                 print("📸 Instagram detected - using GraphQL API")
             
-            elif platform == 'facebook':  
-                ydl_opts.update({
+            elif platform == 'facebook': 
+                ydl_opts. update({
                     'format': 'best',
                 })
                 print("📘 Facebook detected")
             
             elif platform == 'tiktok':
                 ydl_opts.update({
-                    'extractor_args':  {
+                    'extractor_args': {
                         'tiktok': {
-                            'api_hostname': 'api22-normal-c-useast2a. tiktokv.com'
+                            'api_hostname': 'api22-normal-c-useast2a.tiktokv.com'
                         }
                     },
                 })
@@ -147,13 +125,13 @@ class UniversalDownloader:
                 duration = self.format_duration(duration_seconds)
                 
                 # Extract uploader
-                uploader = info. get('uploader', info.get('channel', info.get('creator', 'Unknown')))
+                uploader = info.get('uploader', info.get('channel', info.get('creator', 'Unknown')))
                 
                 # Extract formats (for quality selection)
                 formats = []
                 has_quality = self.has_quality_options(platform)
                 
-                if has_quality and 'formats' in info: 
+                if has_quality and 'formats' in info:
                     # Filter video formats (must have both video and audio)
                     video_formats = []
                     
@@ -163,27 +141,27 @@ class UniversalDownloader:
                         height = f.get('height')
                         
                         # Include formats with video and audio OR video-only (we'll merge later)
-                        if vcodec != 'none' and height: 
-                            video_formats.append(f)
+                        if vcodec != 'none' and height:
+                            video_formats. append(f)
                     
                     # Get unique resolutions
                     seen_heights = set()
                     for fmt in video_formats:
                         height = fmt.get('height')
                         if height and height not in seen_heights and height >= 240:
-                            seen_heights. add(height)
+                            seen_heights.add(height)
                             filesize = fmt.get('filesize') or fmt.get('filesize_approx', 0)
                             formats. append({
                                 'format_id': fmt['format_id'],
                                 'quality': f"{height}p",
                                 'height': height,
-                                'ext': fmt. get('ext', 'mp4'),
+                                'ext': fmt.get('ext', 'mp4'),
                                 'filesize': filesize,
                                 'filesize_human': self.format_filesize(filesize)
                             })
                     
                     # Sort by quality (highest first)
-                    formats.sort(key=lambda x: x['height'], reverse=True)
+                    formats. sort(key=lambda x: x['height'], reverse=True)
                 
                 # Build result
                 result = {
@@ -206,57 +184,35 @@ class UniversalDownloader:
                 
                 return result
                 
-        except yt_dlp.utils. DownloadError as e: 
+        except yt_dlp.utils. DownloadError as e:
             error_msg = str(e)
             print(f"❌ yt-dlp DownloadError: {error_msg}")
             
-            # 🆕 Enhanced cookie-related error handling
-            if 'Sign in to confirm you\'re not a bot' in error_msg or 'bot' in error_msg.lower():
-                return {
-                    'status': 'error', 
-                    'message': '🍪 Bot check detected!  Please update your cookies. txt file.\n'
-                               'Export fresh cookies from your browser using "Get cookies.txt" extension.'
-                }
-            
-            elif 'Cookies expired' in error_msg or 'cookies' in error_msg.lower():
-                return {
-                    'status': 'error',
-                    'message': '🍪 Cookies expired or invalid!\n'
-                               'Please export fresh cookies from your browser and replace cookies.txt'
-                }
-            
-            elif 'Video unavailable' in error_msg or 'This video is unavailable' in error_msg:  
+            # Detailed error handling
+            if 'Video unavailable' in error_msg or 'This video is unavailable' in error_msg: 
                 return {'status': 'error', 'message': 'Video is unavailable or has been deleted'}
             
             elif 'Private video' in error_msg or 'private' in error_msg. lower():
                 return {'status':  'error', 'message':  'This video is private.  Only public videos can be downloaded'}
             
-            elif 'Login required' in error_msg or 'Sign in' in error_msg or 'login_required' in error_msg: 
-                cookie_hint = ""
-                if not os.path.exists(self.cookies_file):
-                    cookie_hint = "\n🍪 Tip: Add cookies.txt file to download authenticated content"
-                
+            elif 'Login required' in error_msg or 'Sign in' in error_msg or 'login_required' in error_msg:
                 if platform == 'instagram':
-                    return {'status': 'error', 'message': f'Instagram requires login. Try public posts only or the content may be age-restricted{cookie_hint}'}
-                elif platform == 'facebook':  
-                    return {'status':  'error', 'message':  f'Facebook requires login. Try public videos only{cookie_hint}'}
+                    return {'status': 'error', 'message': 'Instagram requires login. Try public posts only or the content may be age-restricted'}
+                elif platform == 'facebook': 
+                    return {'status': 'error', 'message': 'Facebook requires login. Try public videos only'}
                 else:
-                    return {'status':  'error', 'message':  f'Login required. Try public content only{cookie_hint}'}
+                    return {'status':  'error', 'message':  'Login required.  Try public content only'}
             
-            elif 'not available' in error_msg.lower() or 'geo' in error_msg.lower():
+            elif 'not available' in error_msg. lower() or 'geo' in error_msg.lower():
                 return {'status': 'error', 'message': 'Content not available in your region'}
             
-            elif 'HTTP Error 403' in error_msg or '403' in error_msg:  
-                cookie_msg = ""
-                if not os. path.exists(self.cookies_file):
-                    cookie_msg = " Try adding cookies.txt file."
-                
+            elif 'HTTP Error 403' in error_msg or '403' in error_msg: 
                 if platform == 'instagram':
-                    return {'status': 'error', 'message': f'Instagram blocked the request.  Try again in a few minutes{cookie_msg}'}
-                elif platform == 'facebook': 
-                    return {'status': 'error', 'message': f'Facebook blocked the request. Try a different link{cookie_msg}'}
+                    return {'status': 'error', 'message': 'Instagram blocked the request.  Try again in a few minutes'}
+                elif platform == 'facebook':
+                    return {'status': 'error', 'message': 'Facebook blocked the request. Try a different link'}
                 else:
-                    return {'status': 'error', 'message': f'Access denied. Try again later{cookie_msg}'}
+                    return {'status': 'error', 'message': 'Access denied. Try again later'}
             
             elif 'HTTP Error 404' in error_msg or '404' in error_msg:
                 return {'status': 'error', 'message': 'Content not found (404). Check if the link is correct'}
@@ -265,25 +221,25 @@ class UniversalDownloader:
                 return {'status': 'error', 'message': 'Too many requests. Please wait a few minutes and try again'}
             
             elif 'HTTP Error 400' in error_msg or '400' in error_msg:
-                return {'status': 'error', 'message': 'Invalid request.  Check if the link is correct'}
+                return {'status': 'error', 'message': 'Invalid request. Check if the link is correct'}
             
             elif 'Unsupported URL' in error_msg or 'No video formats found' in error_msg:
                 return {'status': 'error', 'message': 'Your link is broken, please provide valid link'}
             
             elif 'consent' in error_msg.lower() or 'cookie' in error_msg.lower():
-                return {'status': 'error', 'message': '🍪 Content requires consent. Please add cookies.txt file or try accessing from a browser first'}
+                return {'status': 'error', 'message': 'Content requires consent. Try accessing from a browser first'}
             
-            else: 
-                return {'status': 'error', 'message': f'Unable to fetch:  {error_msg[: 100]}'}
+            else:
+                return {'status': 'error', 'message': f'Unable to fetch: {error_msg[: 100]}'}
         
-        except Exception as e:  
+        except Exception as e: 
             error_str = str(e)
-            print(f"❌ Unexpected error:  {error_str}")
+            print(f"❌ Unexpected error: {error_str}")
             
             if 'HTTP Error' in error_str:
                 return {'status': 'error', 'message': 'Network error. Please try again'}
-            elif 'timeout' in error_str.lower():
-                return {'status': 'error', 'message': 'Request timed out. Check your connection'}
+            elif 'timeout' in error_str. lower():
+                return {'status':  'error', 'message':  'Request timed out.  Check your connection'}
             else:
                 return {'status': 'error', 'message': 'Your link is broken, please provide valid link'}
     
@@ -298,7 +254,7 @@ class UniversalDownloader:
         
         if hours > 0:
             return f"{hours}:{minutes:02d}:{secs:02d}"
-        else:  
+        else: 
             return f"{minutes}:{secs:02d}"
     
     def format_filesize(self, bytes):
@@ -323,7 +279,7 @@ class UniversalDownloader:
             else:
                 total = None
             
-            if total:   
+            if total:  
                 downloaded = d. get('downloaded_bytes', 0)
                 percentage = int((downloaded / total) * 100)
             else:
@@ -331,7 +287,7 @@ class UniversalDownloader:
             
             # Get speed
             speed = d.get('speed', 0)
-            if speed:    
+            if speed:   
                 speed_mb = speed / (1024 * 1024)  # Convert to MB/s
                 speed_str = f"{speed_mb:.2f} MB/s"
             else:
@@ -341,7 +297,7 @@ class UniversalDownloader:
             self.progress_data[session_id] = {
                 'status': 'downloading',
                 'percentage': percentage,
-                'downloaded':  d.get('downloaded_bytes', 0),
+                'downloaded': d.get('downloaded_bytes', 0),
                 'total': total,
                 'speed': speed_str,
                 'eta': d.get('eta', 0)
@@ -353,13 +309,13 @@ class UniversalDownloader:
             self.progress_data[session_id] = {
                 'status':  'finished',
                 'percentage': 100,
-                'message': 'Processing...'
+                'message': 'Processing.. .'
             }
             print(f"✅ Download finished, processing...")
     
     def get_progress(self, session_id):
         """Get current progress for a session"""
-        return self. progress_data.get(session_id, {'status': 'unknown', 'percentage': 0})
+        return self.progress_data.get(session_id, {'status': 'unknown', 'percentage': 0})
     
     def clear_progress(self, session_id):
         """Clear progress data for a session"""
@@ -387,7 +343,7 @@ class UniversalDownloader:
         
         # Valid media extensions
         media_extensions = ['.mp4', '.mkv', '.webm', '.m4v', '.mov', '.avi', '.flv',
-                          '. jpg', '.jpeg', '.png', '. gif', '.webp']
+                          '.jpg', '.jpeg', '.png', '. gif', '.webp']
         
         # If expected filename provided, try variations
         if expected_filename:  
@@ -403,7 +359,7 @@ class UniversalDownloader:
             if any(file.endswith(ext) for ext in media_extensions):
                 filepath = os.path.join(folder, file)
                 # Check if file size is reasonable (> 1KB)
-                if os.path. getsize(filepath) > 1024:
+                if os.path.getsize(filepath) > 1024:
                     return filepath
         
         return None
@@ -411,16 +367,19 @@ class UniversalDownloader:
     def download_with_quality(self, url, path, session_id=None, format_id=None, platform=None):
         """Download video with specific quality"""
         try:
-            # Base download options with cookies 🆕
-            ydl_opts = self.get_base_ydl_opts()
-            ydl_opts.update({
+            # Base download options
+            ydl_opts = {
                 'outtmpl': os.path.join(path, '%(title)s.%(ext)s'),
+                'quiet': False,
+                'no_warnings': False,
+                'no_check_certificate': True,
+                'http_headers': self.get_common_headers(),
                 'merge_output_format': 'mp4',
                 'postprocessors': [{
-                    'key': 'FFmpegVideoConvertor',
+                    'key':  'FFmpegVideoConvertor',
                     'preferedformat': 'mp4',
                 }],
-            })
+            }
             
             # Platform-specific configurations
             if platform == 'instagram':
@@ -434,7 +393,7 @@ class UniversalDownloader:
                 })
                 print("📸 Instagram download mode")
             
-            elif platform == 'facebook': 
+            elif platform == 'facebook':
                 ydl_opts.update({
                     'format': 'best',
                 })
@@ -443,9 +402,9 @@ class UniversalDownloader:
             elif platform == 'tiktok':
                 ydl_opts.update({
                     'format': 'best',
-                    'extractor_args': {
+                    'extractor_args':  {
                         'tiktok': {
-                            'api_hostname':  'api22-normal-c-useast2a.tiktokv.com'
+                            'api_hostname': 'api22-normal-c-useast2a. tiktokv.com'
                         }
                     },
                 })
@@ -464,13 +423,13 @@ class UniversalDownloader:
             if session_id:  
                 ydl_opts['progress_hooks'] = [lambda d:  self.progress_hook(d, session_id)]
             
-            print(f"📥 Starting download: {url}")
+            print(f"📥 Starting download:  {url}")
             
-            with yt_dlp. YoutubeDL(ydl_opts) as ydl:
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 info = ydl.extract_info(url, download=True)
                 
                 if not info:
-                    return {'status': 'error', 'message': 'Download failed - no info returned'}
+                    return {'status':  'error', 'message':  'Download failed - no info returned'}
                 
                 filename = ydl.prepare_filename(info)
                 
@@ -482,7 +441,7 @@ class UniversalDownloader:
                 
                 if not actual_file:
                     print(f"❌ Media file not found in:  {path}")
-                    print(f"Expected: {filename}")
+                    print(f"Expected:  {filename}")
                     print(f"Files in folder: {os.listdir(path) if os.path.exists(path) else 'Folder not found'}")
                     return {'status': 'error', 'message': 'Download completed but file not found'}
                 
@@ -508,44 +467,21 @@ class UniversalDownloader:
             error_msg = str(e)
             print(f"❌ Download error: {error_msg}")
             
-            # 🆕 Enhanced cookie error handling
-            if 'Sign in to confirm you\'re not a bot' in error_msg or 'bot' in error_msg.lower():
-                return {
-                    'status': 'error',
-                    'message': '🍪 Bot check failed! Update cookies.txt with fresh browser cookies.'
-                }
-            
-            elif 'Cookies expired' in error_msg or 'rotated' in error_msg.lower():
-                return {
-                    'status': 'error',
-                    'message': '🍪 Cookies expired!  Export fresh cookies from your browser.'
-                }
-            
-            elif 'HTTP Error 429' in error_msg or 'rate' in error_msg. lower():
-                return {'status': 'error', 'message': 'Rate limited. Please wait a few minutes'}
-            
-            elif 'HTTP Error 403' in error_msg: 
-                cookie_hint = ""
-                if not os. path.exists(self.cookies_file):
-                    cookie_hint = " Try adding cookies.txt file."
-                return {'status': 'error', 'message': f'Access denied. Content may be restricted{cookie_hint}'}
-            
-            elif 'login' in error_msg.lower() or 'Sign in' in error_msg:  
-                cookie_hint = ""
-                if not os. path.exists(self.cookies_file):
-                    cookie_hint = " Add cookies.txt to download authenticated content."
-                return {'status': 'error', 'message': f'Login required.  Content is private or age-restricted{cookie_hint}'}
-            
+            if 'HTTP Error 429' in error_msg or 'rate' in error_msg.lower():
+                return {'status': 'error', 'message': 'Rate limited.  Please wait a few minutes'}
+            elif 'HTTP Error 403' in error_msg:  
+                return {'status': 'error', 'message': 'Access denied. Content may be restricted'}
+            elif 'login' in error_msg. lower() or 'Sign in' in error_msg: 
+                return {'status': 'error', 'message': 'Login required. Content is private or age-restricted'}
             elif 'unavailable' in error_msg.lower():
                 return {'status': 'error', 'message': 'Video unavailable'}
-            
             else:
                 return {'status': 'error', 'message': f'Download failed: {error_msg[:100]}'}
         
-        except Exception as e: 
+        except Exception as e:
             error_str = str(e)
             print(f"❌ Unexpected download error: {error_str}")
-            return {'status': 'error', 'message': f'Download error: {error_str[:100]}'}
+            return {'status': 'error', 'message': f'Download error: {error_str[: 100]}'}
     
     def download_content(self, url, download_path, session_id=None, format_id=None):
         """Main download function"""
